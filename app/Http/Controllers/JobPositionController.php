@@ -14,7 +14,7 @@ class JobPositionController extends Controller
      */
     public function index()
     {
-        //
+        return view('jobs',['jobs'=>JobPosition::all()]);
     }
 
     /**
@@ -24,7 +24,40 @@ class JobPositionController extends Controller
      */
     public function create()
     {
-        //
+        $form = [
+            'attr' => [
+                'action' => route('jobs.store'),
+            ],
+            'fields' => [
+                'title'=> [
+                    'type'=> 'text',
+                    'label' => 'Darbo Pozicija',
+                ],
+                'client_description' => [
+                    'type' => 'textarea',
+                    'label'=> 'Kliento aprasymas'
+                ],
+                'description' => [
+                    'type' => 'textarea',
+                    'label'=> 'Darbo aprasymas'
+                ],
+                'location'=> [
+                    'type'=> 'text',
+                    'label' => 'Vieta',
+                ],
+                'img'=> [
+                    'type'=> 'file',
+                    'label' => 'Nuotrauka',
+                ],
+            ],
+            'buttons' => [
+                'submit' => [
+                    'text' => 'Add achievement'
+                ]
+            ],
+        ];
+
+        return view('jobs_form',['form'=>$form]);
     }
 
     /**
@@ -35,7 +68,7 @@ class JobPositionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
@@ -44,9 +77,9 @@ class JobPositionController extends Controller
      * @param  \App\JobPosition  $jobPosition
      * @return \Illuminate\Http\Response
      */
-    public function show(JobPosition $jobPosition)
+    public function show($id)
     {
-        //
+        return view('jobs_show',['job'=>JobPosition::find($id)]);
     }
 
     /**
@@ -82,4 +115,6 @@ class JobPositionController extends Controller
     {
         //
     }
+
+
 }

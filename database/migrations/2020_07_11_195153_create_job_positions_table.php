@@ -17,9 +17,9 @@ class CreateJobPositionsTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->text('client_description');
+            $table->json('description');
             $table->string('location');
             $table->string('img');
-            $table->integer('description_id');
         });
     }
 

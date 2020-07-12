@@ -38,6 +38,23 @@ if (!function_exists('input_attr')) {
     }
 }
 
+if (!function_exists('file_attr')) {
+    /**
+     * F-cija generuoja input html atributus
+     * @param $field_id
+     * @param array $field
+     * @return string
+     */
+    function file_attr($field_id ,array $field){
+        return html_attr(($field['extra']['attr'] ?? []) +
+            [
+                'name' => $field_id,
+                'type' => $field['type'],
+                'value' => $field['value'] ?? ''
+            ]);
+    }
+}
+
 if (!function_exists('select_attr')){
     /**
      * F-cija generuoja select atributus
