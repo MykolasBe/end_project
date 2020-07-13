@@ -13,7 +13,7 @@
                         @case('requirements')
                         <h3>Reikalavimai:</h3>
                         @break
-                        @case('advatnages')
+                        @case('advantages')
                         <h3>Privalumai:</h3>
                         @break
                         @case('offer')
@@ -29,6 +29,9 @@
                 </div>
                 <p>{{ $job->client_description }}</p>
             </div>
+        </div>
+        <div>
+            {!! $buttons !!}
         </div>
         <p>CV  su nuoroda “{{$job->title}}” siųskite el.paštu: personalas@expertus.lt</p>
         <p>Konfidencialumą garantuojame. Informuosime tik tinkamus kandidatus.</p>

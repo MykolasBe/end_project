@@ -22,7 +22,7 @@ $factory->define(JobPosition::class, function (Faker $faker) {
                 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque.',
                 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque.',
             ],
-            'advatnages' => [
+            'advantages' => [
                 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam.',
                 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam.',
             ],
