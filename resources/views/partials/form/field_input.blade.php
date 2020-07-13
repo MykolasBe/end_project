@@ -1,6 +1,6 @@
 <label>
     <span>{{ $field['label'] ?? '' }}</span>
-    @if(in_array($field['type'] ?? [], ['text', 'password', 'email', 'number', 'hidden']))
+    @if(in_array($field['type'] ?? [], ['text', 'password', 'email', 'number', 'hidden', 'date']))
         <input {!! input_attr($field_id, $field) !!}>
     @elseif(in_array($field['type'] ?? [], ['select']))
         <select {!! select_attr($field_id, $field) !!}>

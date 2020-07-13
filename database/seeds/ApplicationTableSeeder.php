@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class ApplicationFormDetailedInfoSeeder extends Seeder
+class ApplicationTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +11,6 @@ class ApplicationFormDetailedInfoSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\ApplicationDetail::class,10)->create();
+        factory(\App\Application::class, 20)->create();
     }
 }

@@ -21,3 +21,4 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/jobs','JobPositionController');
+Route::resource('/application','ApplicationController');

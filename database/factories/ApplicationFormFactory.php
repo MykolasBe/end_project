@@ -2,15 +2,23 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\ApplicationForm;
+use App\Application;
 use Faker\Generator as Faker;
 
-$factory->define(ApplicationForm::class, function (Faker $faker) {
+$factory->define(Application::class, function (Faker $faker) {
     return [
-        'full_name' => $faker->name,
+        'first_name' => $faker->firstName,
+        'last_name' => $faker->lastName,
+        'phone' => $faker->phoneNumber,
+        'email' => $faker->email,
         'birth_date' => $faker->date(),
         'location' => $faker->city,
-        'education' => $faker->$faker->words(3, true),
-        'languages' => $faker->$faker->words(3, true),
+        'education' => $faker->words(2, true),
+        'education_degree' => $faker->randomDigit,
+        'languages' => $faker->words(2, true),
+        'status' => $faker->words(2, true),
+        'work_experience' => $faker->jobTitle,
+        'work_from' => $faker->date(),
+        'work_to' => $faker->date(),
     ];
 });

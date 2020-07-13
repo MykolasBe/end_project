@@ -65,7 +65,7 @@ if (!function_exists('select_attr')){
     function select_attr(string $field_id, array $field): string
     {
         $attrs = $field['extra']['attr'] ?? [];
-        if (in_array('multiple',$field['extra']['attr'])){
+        if (in_array('multiple', $attrs)){
             $attrs += [
                 'name' => $field_id . '[]',
             ];
