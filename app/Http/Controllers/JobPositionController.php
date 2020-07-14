@@ -32,40 +32,40 @@ class JobPositionController extends Controller
             'fields' => [
                 'title'=> [
                     'type'=> 'text',
-                    'label' => 'Darbo Pozicija',
+                    'label' => 'Job Title',
                 ],
                 'client_description' => [
                     'type' => 'textarea',
-                    'label'=> 'Kliento aprasymas'
+                    'label'=> 'Client Description'
                 ],
                 'description' => [
                     'type' => 'textarea',
-                    'label'=> 'Darbo aprasymas'
+                    'label'=> 'Job Description'
                 ],
                 'requirements' => [
                     'type' => 'textarea',
-                    'label'=> 'Reikalavimai'
+                    'label'=> 'Requirements'
                 ],
                 'advantages' => [
                     'type' => 'textarea',
-                    'label'=> 'Privalumai'
+                    'label'=> 'Advantages'
                 ],
                 'offer' => [
                     'type' => 'textarea',
-                    'label'=> 'Pasiulymas'
+                    'label'=> 'Offer'
                 ],
                 'location'=> [
                     'type'=> 'text',
-                    'label' => 'Vieta',
+                    'label' => 'Location',
                 ],
                 'img'=> [
                     'type'=> 'text',
-                    'label' => 'Nuotrauka',
+                    'label' => 'Photo',
                 ],
             ],
             'buttons' => [
                 'submit' => [
-                    'text' => 'Prideti skelbima'
+                    'text' => 'Add Job Listing'
                 ]
             ],
         ];
@@ -82,7 +82,8 @@ class JobPositionController extends Controller
     public function store(JobRequest $request)
     {
         $job = new JobPosition($request->sanitizedInputs());
-//        $job->save();
+        $job->save();
+
         return redirect(route('jobs.index'));
     }
 
@@ -97,10 +98,11 @@ class JobPositionController extends Controller
         $job = JobPosition::find($id);
         $edit_route = route('jobs.edit', $job->id);
 
-        $edit = "<a href=$edit_route>Edit</a>" .
-        view('partials.form.delete_button',['job_id' => $job->id]);
+        $buttons = "<a href=$edit_route>Edit</a>" .
+        view('partials.form.delete_button',['job_id' => $job->id]) .
+        view('partials.form.job_application', ['job' => $job]);
 
-        return view('jobs_show',['job'=>$job, 'buttons' => $edit]);
+        return view('jobs_show',['job'=>$job, 'buttons' => $buttons]);
     }
 
     /**
@@ -193,7 +195,8 @@ class JobPositionController extends Controller
     public function update(JobRequest $request, $id)
     {
         $job = JobPosition::find($id);
-//        $job->update($request->sanitizedInputs());
+        $job->update($request->sanitizedInputs());
+
         return redirect(route('jobs.index'));
 
     }
@@ -212,5 +215,31 @@ class JobPositionController extends Controller
         return redirect(route('jobs.index'));
     }
 
+    public function applied(){
+        $data['jobs'] = JobPosition::all();
+        foreach ($data['jobs'] as $key => $job){
+            $rows = [];
+
+            foreach ($job->applications as $application){
+                $action_route = route('application.show',$application->id);
+                $rows[] = [
+                    $application->first_name . ' ' . $application->last_name,
+                    $application->birth_date,
+                    $application->location,
+                    $application->education,
+                    $application->languages,
+                    $application->work_experience,
+                    "<a href=$action_route>View Application</a>"
+                ];
+            }
+
+            $data['rows'][$key] = $rows;
+        }
+
+        return view('jobs_applied',[
+            'jobs' => $data['jobs'],
+            'rows' => $data['rows']
+        ]);
+    }
 
 }

@@ -20,5 +20,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('jobs/applied', 'JobPositionController@applied')->name('jobs.applied');
 Route::resource('/jobs','JobPositionController');
+Route::get('application/apply/{id}', 'ApplicationController@apply')->name('application.apply');
 Route::resource('/application','ApplicationController');

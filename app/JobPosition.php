@@ -15,7 +15,7 @@ class JobPosition extends Model
         'img',
     ];
 
-//    public function description(){
-//        return $this->belongsTo(JobDescription::class);
-//    }
+    public function applications(){
+        return $this->belongsToMany(Application::class,'job_applications');
+    }
 }

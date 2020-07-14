@@ -27,4 +27,8 @@ class Application extends Model
         'work_from',
         'work_to',
     ];
+
+    public function jobs(){
+        return $this->belongsToMany(JobPosition::class,'job_applications');
+    }
 }

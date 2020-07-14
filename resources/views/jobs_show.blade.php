@@ -8,16 +8,16 @@
                 @foreach(json_decode($job->description) as $key => $description)
                     @switch($key)
                         @case('description')
-                        <h3>Darbo pobūdis:</h3>
+                        <h3>Description:</h3>
                         @break
                         @case('requirements')
-                        <h3>Reikalavimai:</h3>
+                        <h3>Requirements:</h3>
                         @break
                         @case('advantages')
-                        <h3>Privalumai:</h3>
+                        <h3>Advantages:</h3>
                         @break
                         @case('offer')
-                        <h3>Įmonė siūlo:</h3>
+                        <h3>Offer:</h3>
                         @break
                     @endswitch
                     @include('components.list',['list'=>$description])

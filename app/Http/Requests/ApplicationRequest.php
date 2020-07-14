@@ -26,6 +26,7 @@ class ApplicationRequest extends FormRequest
     public function rules()
     {
         return [
+            'job_id' => 'nullable',
             'first_name' => 'required|string|max:100',
             'last_name' => 'required|string|max:100',
             'phone' => 'required|numeric',
@@ -37,8 +38,8 @@ class ApplicationRequest extends FormRequest
             'languages' => 'required|string|max:100',
             'status' => 'required|string|max:150',
             'work_experience' => 'required|string|max:150',
-            'work_from' => 'string|date',
-            'work_to' => 'string|date',
+            'work_from' => 'date|nullable',
+            'work_to' => 'date|nullable',
         ];
     }
 
@@ -46,6 +47,7 @@ class ApplicationRequest extends FormRequest
     public function sanitizedInputs():array
     {
         return (new Sanitizer($this->validated(),[
+            'job_id' => 'trim|escape',
             'first_name' => 'trim|escape',
             'last_name' => 'trim|escape',
             'phone' => 'trim|escape',

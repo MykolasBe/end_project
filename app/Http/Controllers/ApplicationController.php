@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Application;
 use App\Http\Requests\ApplicationRequest;
+use App\Http\Requests\JobApplicationRequest;
+use App\JobPosition;
 use Illuminate\Http\Request;
 
 class ApplicationController extends Controller
@@ -15,7 +17,30 @@ class ApplicationController extends Controller
      */
     public function index()
     {
-        //
+        foreach (Application::all() as $key => $application){
+            $action_route = route('application.show',$application->id);
+            $rows[$key] = [
+                $application->first_name,
+                $application->last_name,
+                $application->birth_date,
+                $application->location,
+                $application->education,
+                $application->work_experience,
+                "<a href=$action_route>View Application</a>"
+            ];
+        }
+        return view('applications',[
+            'headers' => [
+                'First Name',
+                'Last Name',
+                'Birth Date',
+                'Location',
+                'Education',
+                'Work Experience',
+                'Actions'
+            ],
+            'rows' => $rows
+        ]);
     }
 
     /**
@@ -23,76 +48,82 @@ class ApplicationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($job_id = null)
     {
         $form = [
             'attr' => [
                 'action' => route('application.store'),
             ],
             'fields' => [
+                'job_id' => [
+                    'type' => 'hidden',
+                    'value' => $job_id,
+                ],
                 'first_name'=> [
                     'type'=> 'text',
-                    'label' => 'Vardas',
+                    'label' => 'First Name',
                 ],
                 'last_name'=> [
                     'type'=> 'text',
-                    'label' => 'Pavarde',
+                    'label' => 'Last Name',
                 ],
                 'phone'=> [
                     'type'=> 'text',
-                    'label' => 'Mobilus telefonas',
+                    'label' => 'Phone Number',
                 ],
                 'email'=> [
                     'type'=> 'text',
-                    'label' => 'El.pastas',
+                    'label' => 'Email',
                 ],
                 'birth_date' => [
                     'type' => 'date',
-                    'label'=> 'Gimimo data'
+                    'label'=> 'Birth Date'
                 ],
                 'location' => [
                     'type' => 'text',
-                    'label'=> 'Gyvenamoji vieta'
+                    'label'=> 'Location'
                 ],
                 'education_degree' =>[
                     'type' => 'select',
-                    'label' => 'Issilavinimas',
+                    'label' => 'Education Degree',
                     'value' => '',
                     'options' => [
-                        Application::HIGH_SCHOOL_DEGREE =>'Vidurinis ugdymas',
-                        Application::BACHELOR_DEGREE =>'Bakalauras',
-                        Application::MASTER_DEGREE =>'Magistras',
-                        Application::PHD_DEGREE =>'Dokturantura',
+                        Application::HIGH_SCHOOL_DEGREE =>'High School',
+                        Application::BACHELOR_DEGREE =>'Bachelor Degree',
+                        Application::MASTER_DEGREE =>'Master Degree',
+                        Application::PHD_DEGREE =>'Phd Degree',
                     ]
                 ],
                 'education' => [
                     'type' => 'text',
-                    'label'=> 'Studiju kryptis'
+                    'label'=> 'Education Field'
                 ],
                 'languages' => [
                     'type' => 'text',
-                    'label'=> 'Kalbos'
+                    'label'=> 'Languages'
                 ],
                 'status' => [
                     'type' => 'text',
-                    'label'=> 'Uzimtumas'
+                    'label'=> 'Occupation'
                 ],
+                // bool
                 'work_experience' => [
                     'type' => 'text',
-                    'label'=> 'Darbo patirtis'
+                    'label'=> 'Work experience'
                 ],
+                // permanant or temp
                 'work_from' => [
                     'type' => 'date',
-                    'label'=> 'Nuo'
+                    'label'=> 'From'
                 ],
                 'work_to' => [
                     'type' => 'date',
-                    'label'=> 'Iki'
+                    'label'=> 'To'
                 ],
             ],
             'buttons' => [
                 'submit' => [
-                    'text' => 'Siusti anketa'
+                    'text' => 'Send Application'
                 ]
             ],
         ];
@@ -111,7 +142,11 @@ class ApplicationController extends Controller
         $application = new Application($request->sanitizedInputs());
         $application->save();
 
-        return redirect('jobs.index');
+        if ($request->sanitizedInputs()['job_id']) {
+            $application->jobs()->attach(JobPosition::find($request->sanitizedInputs()['job_id']));
+        }
+
+       return redirect(route('jobs.index'));
     }
 
     /**
@@ -122,7 +157,23 @@ class ApplicationController extends Controller
      */
     public function show($id)
     {
-        //
+        $application = Application::find($id);
+
+        foreach ($application->jobs as $key => $applied_job){
+            $action_route = route('jobs.show',$applied_job->id);
+            $rows[$key] = [
+                $applied_job->title,
+                $applied_job->location,
+                "<a href=$action_route>View Job</a>"
+            ];
+        }
+        return view('application_show',[
+            'application'=> $application,
+            'table'=>[
+                'headers' => ['Title','Location','Actions'],
+                'rows'=> $rows
+            ]
+        ]);
     }
 
     /**
@@ -157,5 +208,30 @@ class ApplicationController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Add/Create the specified resource to storage & pivot.
+     *
+     * @param JobApplicationRequest $request
+     * @param int $id
+     * @return void
+     */
+    public function apply(JobApplicationRequest $request, $id)
+    {
+        $application = Application::firstwhere('email',$request->sanitizedInputs()['email']);
+        if ($application){
+            $jobs = [];
+            foreach ($application->jobs as $applied_jobs){
+                $jobs[] = $applied_jobs->id;
+            }
+            $jobs[] = JobPosition::find($id)->id;
+
+            $application->jobs()->sync($jobs);
+
+            return redirect(route('jobs.index'));
+        } else {
+            return $this->create($id);
+        }
     }
 }
