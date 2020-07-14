@@ -33,10 +33,7 @@
         <div>
             {!! $buttons !!}
         </div>
-        <p>CV  su nuoroda “{{$job->title}}” siųskite el.paštu: personalas@expertus.lt</p>
-        <p>Konfidencialumą garantuojame. Informuosime tik tinkamus kandidatus.</p>
-        <p>Pateikdami savo gyvenimo aprašymą įmonei UAB Expertus LT, Jūs sutinkate,
-            jog naudosime Jūsų asmens duomenis personalo atrankos tikslais.
-            Daugiau informacijos <a href="">rasite cia</a></p>
+        <p>CV  with caption “{{$job->title}}” send to: {{ env('MAIL_USERNAME').'@gmail.com' }}</p>
+        <p>Confidentiality guaranteed. Only selected candidates will be informed.</p>
     </div>
 @endsection
