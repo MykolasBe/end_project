@@ -228,7 +228,8 @@ class JobPositionController extends Controller
                     $application->location,
                     $application->education,
                     $application->languages,
-                    $application->work_experience,
+                    $application->work_experience === 0 ? 'No experience' : 'Has experience',
+                    $application->work_type,
                     "<a href=$action_route>View Application</a>"
                 ];
             }
@@ -241,5 +242,4 @@ class JobPositionController extends Controller
             'rows' => $data['rows']
         ]);
     }
-
 }

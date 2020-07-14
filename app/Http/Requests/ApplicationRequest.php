@@ -37,9 +37,8 @@ class ApplicationRequest extends FormRequest
             'education' => 'string|max:100',
             'languages' => 'required|string|max:100',
             'status' => 'required|string|max:150',
-            'work_experience' => 'required|string|max:150',
-            'work_from' => 'date|nullable',
-            'work_to' => 'date|nullable',
+            'work_experience' => 'required|numeric|max:1',
+            'work_type' => 'required|string|max:4',
         ];
     }
 
@@ -59,8 +58,7 @@ class ApplicationRequest extends FormRequest
             'languages' => 'trim|escape',
             'status' => 'trim|escape',
             'work_experience' => 'trim|escape',
-            'work_from' => 'trim|escape',
-            'work_to' => 'trim|escape',
+            'work_type' => 'trim|escape',
         ]))->sanitize();
 
     }

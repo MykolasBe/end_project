@@ -6,7 +6,9 @@ use App\Application;
 use App\Http\Requests\ApplicationRequest;
 use App\Http\Requests\JobApplicationRequest;
 use App\JobPosition;
+use App\Mail\ApplicationSuccess;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ApplicationController extends Controller
 {
@@ -106,19 +108,24 @@ class ApplicationController extends Controller
                     'type' => 'text',
                     'label'=> 'Occupation'
                 ],
-                // bool
                 'work_experience' => [
-                    'type' => 'text',
-                    'label'=> 'Work experience'
+                    'type' => 'select',
+                    'label'=> 'Do you have work experience?',
+                    'value' => '',
+                    'options' => [
+                        1 => 'Yes',
+                        0 => 'No'
+                    ]
                 ],
-                // permanant or temp
-                'work_from' => [
-                    'type' => 'date',
-                    'label'=> 'From'
-                ],
-                'work_to' => [
-                    'type' => 'date',
-                    'label'=> 'To'
+                'work_type' => [
+                    'type' => 'select',
+                    'label'=> 'What type of job are you looking for?',
+                    'value' => '',
+                    'options' => [
+                        'temp' => 'Temporary job',
+                        'full' => 'Full-time job',
+                        'part' => 'Part-time job'
+                    ]
                 ],
             ],
             'buttons' => [
@@ -145,6 +152,7 @@ class ApplicationController extends Controller
         if ($request->sanitizedInputs()['job_id']) {
             $application->jobs()->attach(JobPosition::find($request->sanitizedInputs()['job_id']));
         }
+        Mail::to($application->email)->send(new ApplicationSuccess($application));
 
        return redirect(route('jobs.index'));
     }

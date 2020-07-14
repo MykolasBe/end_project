@@ -14,6 +14,7 @@
                     'Education',
                     'Languages',
                     'Work Experience',
+                    'Work Type',
                     'Actions'
                     ],
                     'rows' => $rows[$key]

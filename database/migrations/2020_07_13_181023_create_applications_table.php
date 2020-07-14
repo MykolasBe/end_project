@@ -25,9 +25,8 @@ class CreateApplicationsTable extends Migration
             $table->integer('education_degree');
             $table->string('languages');
             $table->string('status');
-            $table->string('work_experience');
-            $table->date('work_from');
-            $table->date('work_to');
+            $table->integer('work_experience');
+            $table->string('work_type');
         });
     }
 

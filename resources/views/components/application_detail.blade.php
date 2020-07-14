@@ -26,6 +26,13 @@
     </div>
     <h3>Experience and Occupation</h3>
     <p>{{ $application->status }}</p>
-
-    <p>{{ $application->work_experience }} From: {{ $application->work_from }}, To: {{ $application->work_to }}</p>
+    @switch($application->work_experience)
+        @case(0)
+            <p>Has no work experience</p>
+            @break
+        @case(1)
+        <p>Has work experience</p>
+        @break
+    @endswitch
+    <p>Looking for {{ $application->work_type === 'temp' ? 'temporary job' : $application->work_type .'-time'}} job</p>
 </div>

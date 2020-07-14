@@ -24,8 +24,7 @@ class Application extends Model
         'languages',
         'status',
         'work_experience',
-        'work_from',
-        'work_to',
+        'work_type'
     ];
 
     public function jobs(){
