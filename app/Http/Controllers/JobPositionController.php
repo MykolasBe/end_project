@@ -15,7 +15,7 @@ class JobPositionController extends Controller
      */
     public function index()
     {
-        return view('jobs',['jobs'=>JobPosition::all()]);
+        return view('jobs.jobs',['jobs'=>JobPosition::all()]);
     }
 
     /**
@@ -70,7 +70,7 @@ class JobPositionController extends Controller
             ],
         ];
 
-        return view('jobs_form',['form'=>$form]);
+        return view('jobs.jobs_form',['form'=>$form]);
     }
 
     /**
@@ -102,7 +102,7 @@ class JobPositionController extends Controller
         view('partials.form.delete_button',['job_id' => $job->id]) .
         view('partials.form.job_application', ['job' => $job]);
 
-        return view('jobs_show',['job'=>$job, 'buttons' => $buttons]);
+        return view('jobs.jobs_show',['job'=>$job, 'buttons' => $buttons]);
     }
 
     /**
@@ -182,7 +182,7 @@ class JobPositionController extends Controller
             ],
         ];
 
-        return view('jobs_form',['form'=>$form]);
+        return view('jobs.jobs_form',['form'=>$form]);
     }
 
     /**
@@ -237,7 +237,7 @@ class JobPositionController extends Controller
             $data['rows'][$key] = $rows;
         }
 
-        return view('jobs_applied',[
+        return view('jobs.jobs_applied',[
             'jobs' => $data['jobs'],
             'rows' => $data['rows']
         ]);

@@ -1,4 +1,4 @@
-<table class="list-table">
+<table class="table">
     <thead>
     <tr>
         @foreach($headers ?? [] as $table_head)

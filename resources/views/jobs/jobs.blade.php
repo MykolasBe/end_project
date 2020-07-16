@@ -2,6 +2,6 @@
 
 @section('content')
     <div class="container">
-        @include('components.job_application_form', ['job' => $job])
+        @include('components.job.job_listings', ['jobs.jobs' => $jobs])
     </div>
 @endsection

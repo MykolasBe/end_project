@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container">
-        @include('components.table')
+        <applications-table></applications-table>
+{{--        @include('components.table')--}}
     </div>
 @endsection

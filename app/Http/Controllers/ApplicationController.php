@@ -19,30 +19,7 @@ class ApplicationController extends Controller
      */
     public function index()
     {
-        foreach (Application::all() as $key => $application){
-            $action_route = route('application.show',$application->id);
-            $rows[$key] = [
-                $application->first_name,
-                $application->last_name,
-                $application->birth_date,
-                $application->location,
-                $application->education,
-                $application->work_experience,
-                "<a href=$action_route>View Application</a>"
-            ];
-        }
-        return view('applications',[
-            'headers' => [
-                'First Name',
-                'Last Name',
-                'Birth Date',
-                'Location',
-                'Education',
-                'Work Experience',
-                'Actions'
-            ],
-            'rows' => $rows
-        ]);
+        return view('applications.applications');
     }
 
     /**
@@ -135,7 +112,7 @@ class ApplicationController extends Controller
             ],
         ];
 
-        return view('jobs_form',['form'=>$form]);
+        return view('jobs.jobs_form',['form'=>$form]);
     }
 
     /**
@@ -166,8 +143,9 @@ class ApplicationController extends Controller
     public function show($id)
     {
         $application = Application::find($id);
-
+        $rows = [];
         foreach ($application->jobs as $key => $applied_job){
+
             $action_route = route('jobs.show',$applied_job->id);
             $rows[$key] = [
                 $applied_job->title,
@@ -175,7 +153,7 @@ class ApplicationController extends Controller
                 "<a href=$action_route>View Job</a>"
             ];
         }
-        return view('application_show',[
+        return view('applications.application_show',[
             'application'=> $application,
             'table'=>[
                 'headers' => ['Title','Location','Actions'],
@@ -240,6 +218,16 @@ class ApplicationController extends Controller
             return redirect(route('jobs.index'));
         } else {
             return $this->create($id);
+        }
+    }
+
+    public function search(Request $request)
+    {
+        if ($request->search === null){
+            return Application::all();
+        } else {
+            return Application::where($request->searchField, $request->search)
+                ->orWhere($request->searchField, 'like', '%' . $request->search . '%')->get();
         }
     }
 }

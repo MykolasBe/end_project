@@ -42,7 +42,6 @@ class ApplicationRequest extends FormRequest
         ];
     }
 
-
     public function sanitizedInputs():array
     {
         return (new Sanitizer($this->validated(),[

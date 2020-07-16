@@ -50,7 +50,7 @@ class JobRequest extends FormRequest
             'location' => 'trim|escape',
             'img' => 'trim|escape',
         ]))->sanitize();
-
+            // img file doenst need sanitze
         return [
             'title' => $sanitized['title'],
             'client_description' => $sanitized['client_description'],
