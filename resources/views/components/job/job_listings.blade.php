@@ -6,8 +6,9 @@
                     <img src="{{$job->img}}">
                 </div>
                 <div>
-                    <h3>{{$job->title}}</h3>
-                    <h4>{{$job->location}}</h4>
+                    <h3>{{ $job->title }}</h3>
+                    <h4>{{ $job->field }}</h4>
+                    <h4>{{ $job->location }}</h4>
                 </div>
             </a>
         </div>

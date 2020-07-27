@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container">
+
         @foreach($jobs as $key => $job)
         <div>
             <h2>{{ $job->title }}</h2>

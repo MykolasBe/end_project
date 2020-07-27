@@ -31,8 +31,8 @@
             <p>Has no work experience</p>
             @break
         @case(1)
-        <p>Has work experience</p>
-        @break
+            <p>Has work experience</p>
+            @break
     @endswitch
     <p>Looking for {{ $application->work_type === 'temp' ? 'temporary job' : $application->work_type .'-time'}} job</p>
 </div>

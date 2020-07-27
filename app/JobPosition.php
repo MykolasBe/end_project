@@ -13,6 +13,7 @@ class JobPosition extends Model
         'description',
         'location',
         'img',
+        'field'
     ];
 
     public function applications(){

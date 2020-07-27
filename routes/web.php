@@ -20,8 +20,11 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('jobs/applied', 'JobPositionController@applied')->name('jobs.applied');
+
+Route::get('jobs/applied/{id?}', 'JobPositionController@applied')->name('jobs.applied');
+Route::post('jobs/search', 'JobPositionController@search');
 Route::resource('/jobs','JobPositionController');
+
 Route::get('application/apply/{id}', 'ApplicationController@apply')->name('application.apply');
 Route::post('application/search', 'ApplicationController@search');
 Route::resource('/application','ApplicationController');

@@ -21,6 +21,8 @@ window.Vue = require('vue');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('applications-table', require('./components/ApplicationsTable.vue').default);
+Vue.component('job-listing', require('./components/JobListing.vue').default);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

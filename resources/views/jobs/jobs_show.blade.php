@@ -33,7 +33,6 @@
         <div>
             {!! $buttons !!}
         </div>
-        <p>CV  with caption “{{$job->title}}” send to: {{ env('MAIL_USERNAME').'@gmail.com' }}</p>
         <p>Confidentiality guaranteed. Only selected candidates will be informed.</p>
     </div>
 @endsection

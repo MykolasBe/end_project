@@ -16,6 +16,7 @@ class CreateJobPositionsTable extends Migration
         Schema::create('job_positions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
+            $table->string('field');
             $table->text('client_description');
             $table->json('description');
             $table->string('location');

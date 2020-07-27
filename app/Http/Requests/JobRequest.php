@@ -33,7 +33,8 @@ class JobRequest extends FormRequest
             'advantages' => 'string|max:1000',
             'offer' => 'required|string|max:1000',
             'location' => 'required|string|max:150',
-            'img' => 'required|string|url',
+            'img' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5048',
+            'field' => 'required|string|max:150'
         ];
     }
 
@@ -48,7 +49,7 @@ class JobRequest extends FormRequest
             'advantages' => 'trim|escape',
             'offer' => 'trim|escape',
             'location' => 'trim|escape',
-            'img' => 'trim|escape',
+            'field' => 'trim|escape'
         ]))->sanitize();
             // img file doenst need sanitze
         return [
@@ -61,7 +62,8 @@ class JobRequest extends FormRequest
                 'offer' => explode("||" ,$sanitized['offer']),
             ]),
             'location' => $sanitized['location'],
-            'img' => $sanitized['img']
+            'img' => $sanitized['img'],
+            'field' => $sanitized['field']
         ];
     }
 }

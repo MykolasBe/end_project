@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\JobRequest;
 use App\JobPosition;
 use Illuminate\Http\Request;
+use Illuminate\Queue\Jobs\Job;
+use Illuminate\Support\Facades\Storage;
 
 class JobPositionController extends Controller
 {
@@ -15,7 +17,7 @@ class JobPositionController extends Controller
      */
     public function index()
     {
-        return view('jobs.jobs',['jobs'=>JobPosition::all()]);
+        return view('jobs.jobs');
     }
 
     /**
@@ -28,11 +30,16 @@ class JobPositionController extends Controller
         $form = [
             'attr' => [
                 'action' => route('jobs.store'),
+                'enctype' => 'multipart/form-data'
             ],
             'fields' => [
                 'title'=> [
                     'type'=> 'text',
                     'label' => 'Job Title',
+                ],
+                'field' => [
+                    'type' => 'text',
+                    'label' => 'Job Field'
                 ],
                 'client_description' => [
                     'type' => 'textarea',
@@ -59,7 +66,7 @@ class JobPositionController extends Controller
                     'label' => 'Location',
                 ],
                 'img'=> [
-                    'type'=> 'text',
+                    'type'=> 'file',
                     'label' => 'Photo',
                 ],
             ],
@@ -82,6 +89,8 @@ class JobPositionController extends Controller
     public function store(JobRequest $request)
     {
         $job = new JobPosition($request->sanitizedInputs());
+        $job->img = Storage::url(Storage::putFile('public/jobs',$job->img));
+
         $job->save();
 
         return redirect(route('jobs.index'));
@@ -215,12 +224,20 @@ class JobPositionController extends Controller
         return redirect(route('jobs.index'));
     }
 
-    public function applied(){
-        $data['jobs'] = JobPosition::all();
+    public function applied($id = null){
+        if ($id !== null){
+            $data['jobs'] = [JobPosition::find($id)];
+            if ($data['jobs'] === null){
+               return redirect(route('jobs.applied'));
+            }
+        } else {
+            $data['jobs'] = JobPosition::all();
+        }
+
         foreach ($data['jobs'] as $key => $job){
             $rows = [];
 
-            foreach ($job->applications as $application){
+            foreach ($job->applications ?? [] as $application){
                 $action_route = route('application.show',$application->id);
                 $rows[] = [
                     $application->first_name . ' ' . $application->last_name,
@@ -241,5 +258,16 @@ class JobPositionController extends Controller
             'jobs' => $data['jobs'],
             'rows' => $data['rows']
         ]);
+    }
+
+
+    public function search(Request $request)
+    {
+        if ($request->search === null){
+            return JobPosition::all();
+        } else {
+            return JobPosition::where($request->searchField, $request->search)
+                ->orWhere($request->searchField, 'like', '%' . $request->search . '%')->get();
+        }
     }
 }

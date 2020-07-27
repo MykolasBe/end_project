@@ -48,7 +48,7 @@
                     <td>{{tableRow.location}}</td>
                     <td>{{tableRow.education}}</td>
                     <td>{{tableRow.languages}}</td>
-                    <td>{{tableRow.work_experience}}</td>
+                    <td>{{tableRow.work_experience === 0 ? 'no experience' : 'has experience'}}</td>
                     <td>{{tableRow.work_type}}</td>
                     <td><a :href="'/application/'+tableRow.id">View Applications</a></td>
                 </tr>
@@ -66,7 +66,6 @@
                     searchField: null,
                 },
                 output: this.getAll(),
-                viewApplication:'/application/',
                 show: true
             }
         },

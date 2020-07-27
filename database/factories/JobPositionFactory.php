@@ -8,6 +8,7 @@ use Faker\Generator as Faker;
 $factory->define(JobPosition::class, function (Faker $faker) {
     return [
         'title' => $faker->jobTitle,
+        'field' => 'Human resources / HR',
         'client_description' => $faker->text,
         'description' => json_encode([
             'description' => [

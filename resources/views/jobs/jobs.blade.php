@@ -2,6 +2,6 @@
 
 @section('content')
     <div class="container">
-        @include('components.job.job_listings', ['jobs.jobs' => $jobs])
+        <job-listing></job-listing>
     </div>
 @endsection
