@@ -20,7 +20,7 @@
                     <option value="education"> Education</option>
                     <option value="languages"> Languages</option>
                     <option value="work_experience"> Experience</option>
-                    <option value="work_type"> Work tpye</option>
+                    <option value="work_type"> Work type</option>
                 </select>
             </label>
             <button type="submit">Search</button>
@@ -29,15 +29,7 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Birth Date</th>
-                    <th>Location</th>
-                    <th>Education</th>
-                    <th>Languages</th>
-                    <th>Work Experience</th>
-                    <th>Work Type</th>
-                    <th>Actions</th>
+                    <th v-for="header in headers">{{ header }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -66,6 +58,17 @@
                     searchField: null,
                 },
                 output: this.getAll(),
+                headers:[
+                    'First Name',
+                    'Last Name',
+                    'Birth Date',
+                    'Location',
+                    'Education',
+                    'Languages',
+                    'Work Experience',
+                    'Work Type',
+                    'Actions'
+                ],
                 show: true
             }
         },

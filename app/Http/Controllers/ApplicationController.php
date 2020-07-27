@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\Mail;
 
 class ApplicationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth',['except' => ['create','store','apply']]);
+        parent::__construct();
+    }
     /**
      * Display a listing of the resource.
      *
@@ -137,8 +142,7 @@ class ApplicationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
      */
     public function show($id)
     {
@@ -146,11 +150,10 @@ class ApplicationController extends Controller
         $rows = [];
         foreach ($application->jobs as $key => $applied_job){
 
-            $action_route = route('jobs.show',$applied_job->id);
             $rows[$key] = [
                 $applied_job->title,
                 $applied_job->location,
-                "<a href=$action_route>View Job</a>"
+                view('partials.link',['href'=> route('jobs.show',$applied_job->id), 'text' => 'View job'])
             ];
         }
         return view('applications.application_show',[
@@ -221,7 +224,7 @@ class ApplicationController extends Controller
         }
     }
 
-    public function search(Request $request)
+    public function searchApplication(Request $request)
     {
         if ($request->search === null){
             return Application::all();

@@ -17,14 +17,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('jobs/applied/{id?}', 'JobPositionController@applied')->name('jobs.applied');
-Route::post('jobs/search', 'JobPositionController@search');
+Route::get('jobs/applied', 'JobPositionController@applied')->name('jobs.applied');
+Route::post('jobs/searchJob', 'JobPositionController@searchJob');
+Route::post('jobs/searchApplied', 'JobPositionController@searchApplied');
 Route::resource('/jobs','JobPositionController');
 
 Route::get('application/apply/{id}', 'ApplicationController@apply')->name('application.apply');
-Route::post('application/search', 'ApplicationController@search');
+Route::post('application/search', 'ApplicationController@searchApplication');
 Route::resource('/application','ApplicationController');

@@ -6,10 +6,16 @@ use App\Http\Requests\JobRequest;
 use App\JobPosition;
 use Illuminate\Http\Request;
 use Illuminate\Queue\Jobs\Job;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class JobPositionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth',['except' => ['index','show','searchJob']]);
+        parent::__construct();
+    }
     /**
      * Display a listing of the resource.
      *
@@ -105,11 +111,12 @@ class JobPositionController extends Controller
     public function show($id)
     {
         $job = JobPosition::find($id);
-        $edit_route = route('jobs.edit', $job->id);
-
-        $buttons = "<a href=$edit_route>Edit</a>" .
-        view('partials.form.delete_button',['job_id' => $job->id]) .
-        view('partials.form.job_application', ['job' => $job]);
+        if (Auth::check()){
+            $buttons = view('partials.link',['href'=> route('jobs.edit', $job->id), 'text' => 'Edit']) .
+                view('partials.form.delete_button',['job_id' => $job->id]);
+        } else {
+            $buttons = view('partials.form.job_application', ['job' => $job]);
+        }
 
         return view('jobs.jobs_show',['job'=>$job, 'buttons' => $buttons]);
     }
@@ -224,44 +231,12 @@ class JobPositionController extends Controller
         return redirect(route('jobs.index'));
     }
 
-    public function applied($id = null){
-        if ($id !== null){
-            $data['jobs'] = [JobPosition::find($id)];
-            if ($data['jobs'] === null){
-               return redirect(route('jobs.applied'));
-            }
-        } else {
-            $data['jobs'] = JobPosition::all();
-        }
-
-        foreach ($data['jobs'] as $key => $job){
-            $rows = [];
-
-            foreach ($job->applications ?? [] as $application){
-                $action_route = route('application.show',$application->id);
-                $rows[] = [
-                    $application->first_name . ' ' . $application->last_name,
-                    $application->birth_date,
-                    $application->location,
-                    $application->education,
-                    $application->languages,
-                    $application->work_experience === 0 ? 'No experience' : 'Has experience',
-                    $application->work_type,
-                    "<a href=$action_route>View Application</a>"
-                ];
-            }
-
-            $data['rows'][$key] = $rows;
-        }
-
-        return view('jobs.jobs_applied',[
-            'jobs' => $data['jobs'],
-            'rows' => $data['rows']
-        ]);
+    public function applied()
+    {
+        return view('jobs.jobs_applied');
     }
 
-
-    public function search(Request $request)
+    public function searchJob(Request $request)
     {
         if ($request->search === null){
             return JobPosition::all();
@@ -269,5 +244,21 @@ class JobPositionController extends Controller
             return JobPosition::where($request->searchField, $request->search)
                 ->orWhere($request->searchField, 'like', '%' . $request->search . '%')->get();
         }
+    }
+
+    public function searchApplied(Request $request)
+    {
+        if ($request->search === null){
+            $jobs = JobPosition::all();
+        } else {
+            $jobs = JobPosition::where($request->searchField, $request->search)
+                ->orWhere($request->searchField, 'like', '%' . $request->search . '%')->get();
+        }
+
+        foreach ($jobs as $key => $job){
+            $job->applications;
+        }
+
+        return $jobs;
     }
 }

@@ -4,7 +4,7 @@
             @submit="onSubmit"
             @reset="onReset"
             v-if="show"
-            method="post"
+            method="POST"
         >
             <label>
                 <span>Search for:</span>
@@ -21,20 +21,32 @@
             <button type="submit">Search</button>
             <button type="reset">Reset</button>
         </form>
-        <div class="row">
-            <div class="col-md-4" v-for="job in output" :key="output.id">
-                <a :href="'/jobs/'+job.id">
-                    <div>
-                        <img :src="job.img">
-                    </div>
+            <div v-for="job in output" :key="output.id">
                     <div>
                         <h3>{{ job.title }}</h3>
-                        <h4>{{ job.field }}</h4>
-                        <h4>{{ job.location }}</h4>
+                        <h5>{{ job.field }}</h5>
+                        <h5>{{ job.location }}</h5>
                     </div>
-                </a>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th v-for="header in headers">{{ header }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="application in job.applications" :key="output.id">
+                            <td>{{application.first_name + ' ' + application.last_name}}</td>
+                            <td>{{application.birth_date}}</td>
+                            <td>{{application.location}}</td>
+                            <td>{{application.education}}</td>
+                            <td>{{application.languages}}</td>
+                            <td>{{application.work_experience === 0 ? 'no experience' : 'has experience'}}</td>
+                            <td>{{application.work_type}}</td>
+                            <td><a :href="'/application/'+application.id">View Applications</a></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-        </div>
     </div>
 </template>
 
@@ -47,14 +59,24 @@
                     searchField: null,
                 },
                 output: this.getAll(),
-                show: true
+                show: true,
+                headers: [
+                    'Name',
+                   'Birth Date',
+                   'Location',
+                   'Education',
+                   'Languages',
+                   'Work Experience',
+                   'Work Type',
+                   'Actions'
+                ],
             }
         },
         methods: {
             onSubmit(evt) {
                 evt.preventDefault();
                 let currentObj = this;
-                return axios.post('jobs/search', this.form)
+                return axios.post('/jobs/searchApplied', this.form)
                     .then(function (response) {
                         currentObj.output = response.data
                     })
@@ -66,9 +88,9 @@
             },
             onReset(evt) {
                 evt.preventDefault();
-                this.getAll();
                 this.form.search = ''
                 this.form.searchField = null
+                this.getAll();
                 this.show = false
                 this.$nextTick(() => {
                     this.show = true
@@ -76,7 +98,7 @@
             },
             getAll() {
                 let currentObj = this;
-                return axios.post('jobs/search', this.form)
+                return axios.post('/jobs/searchApplied', this.form)
                     .then(function (response) {
                         currentObj.output = response.data
                     })

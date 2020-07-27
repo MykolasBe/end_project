@@ -54,7 +54,7 @@
             onSubmit(evt) {
                 evt.preventDefault();
                 let currentObj = this;
-                return axios.post('jobs/search', this.form)
+                return axios.post('jobs/searchJob', this.form)
                     .then(function (response) {
                         currentObj.output = response.data
                     })
@@ -66,17 +66,17 @@
             },
             onReset(evt) {
                 evt.preventDefault();
-                this.getAll();
                 this.form.search = ''
                 this.form.searchField = null
                 this.show = false
+                this.getAll();
                 this.$nextTick(() => {
                     this.show = true
                 })
             },
             getAll() {
                 let currentObj = this;
-                return axios.post('jobs/search', this.form)
+                return axios.post('jobs/searchJob', this.form)
                     .then(function (response) {
                         currentObj.output = response.data
                     })

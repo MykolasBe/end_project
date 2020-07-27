@@ -22,6 +22,7 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('applications-table', require('./components/ApplicationsTable.vue').default);
 Vue.component('job-listing', require('./components/JobListing.vue').default);
+Vue.component('job-applied', require('./components/JobsApplied.vue').default);
 
 
 /**
