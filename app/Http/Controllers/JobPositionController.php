@@ -16,6 +16,7 @@ class JobPositionController extends Controller
         $this->middleware('auth',['except' => ['index','show','searchJob']]);
         parent::__construct();
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -58,10 +59,6 @@ class JobPositionController extends Controller
                 'requirements' => [
                     'type' => 'textarea',
                     'label'=> 'Requirements'
-                ],
-                'advantages' => [
-                    'type' => 'textarea',
-                    'label'=> 'Advantages'
                 ],
                 'offer' => [
                     'type' => 'textarea',
@@ -170,11 +167,6 @@ class JobPositionController extends Controller
                     'label'=> 'Reikalavimai',
                     'value' => $desc_fields['requirements']
                 ],
-                'advantages' => [
-                    'type' => 'textarea',
-                    'label'=> 'Privalumai',
-                    'value' => $desc_fields['advantages']
-                ],
                 'offer' => [
                     'type' => 'textarea',
                     'label'=> 'Pasiulymas',
@@ -214,7 +206,6 @@ class JobPositionController extends Controller
         $job->update($request->sanitizedInputs());
 
         return redirect(route('jobs.index'));
-
     }
 
     /**

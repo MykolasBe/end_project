@@ -13,9 +13,6 @@
                         @case('requirements')
                         <h3>Requirements:</h3>
                         @break
-                        @case('advantages')
-                        <h3>Advantages:</h3>
-                        @break
                         @case('offer')
                         <h3>Offer:</h3>
                         @break

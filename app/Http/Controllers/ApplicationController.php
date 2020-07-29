@@ -39,10 +39,6 @@ class ApplicationController extends Controller
                 'action' => route('application.store'),
             ],
             'fields' => [
-                'job_id' => [
-                    'type' => 'hidden',
-                    'value' => $job_id,
-                ],
                 'first_name'=> [
                     'type'=> 'text',
                     'label' => 'First Name',
@@ -108,6 +104,10 @@ class ApplicationController extends Controller
                         'full' => 'Full-time job',
                         'part' => 'Part-time job'
                     ]
+                ],
+                'job_id' => [
+                    'type' => 'hidden',
+                    'value' => $job_id,
                 ],
             ],
             'buttons' => [

@@ -30,7 +30,6 @@ class JobRequest extends FormRequest
             'client_description' => 'required|string|max:1000',
             'description' => 'required|string|max:1000',
             'requirements' => 'required|string|max:1000',
-            'advantages' => 'string|max:1000',
             'offer' => 'required|string|max:1000',
             'location' => 'required|string|max:150',
             'img' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5048',
@@ -46,7 +45,6 @@ class JobRequest extends FormRequest
             'client_description' => 'trim|escape',
             'description' => 'trim|escape',
             'requirements' => 'trim|escape',
-            'advantages' => 'trim|escape',
             'offer' => 'trim|escape',
             'location' => 'trim|escape',
             'field' => 'trim|escape'
@@ -58,7 +56,6 @@ class JobRequest extends FormRequest
             'description' => json_encode([
                 'description' => explode("||" ,$sanitized['description']),
                 'requirements' => explode("||" ,$sanitized['requirements']),
-                'advantages' => explode("||" ,$sanitized['advantages']),
                 'offer' => explode("||" ,$sanitized['offer']),
             ]),
             'location' => $sanitized['location'],

@@ -1,0 +1,25 @@
+.input-form {
+    .input-group{
+        margin-top: 40px;
+        display: grid;
+        grid: auto / 1fr 1fr 1fr;
+    }
+    .button-group{
+        margin: 40px 0;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+    label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        textarea{
+            resize: vertical;
+            min-height: 60px;
+            max-height: 250px;
+        }
+    }
+}
