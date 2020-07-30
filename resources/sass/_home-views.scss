@@ -1,0 +1,24 @@
+@use 'variables';
+
+.home-about{
+    margin: 40px 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.home-list-cont{
+    padding: 40px 0;
+    border-top: 2px solid wheat;
+    border-bottom: 2px solid wheat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    .home-list-wrap{
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+    }
+}

@@ -2,17 +2,17 @@
 
 @section('content')
     <div class="container">
-        <section id="leasing-section">
-            <div>
+        <section>
+            <div class="home-about">
                 <h1>Employee leasing</h1>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
                     et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
                     aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
                     dolore eu fugiat nulla pariatur.</p>
             </div>
-            <div>
+            <div class="home-list-cont">
                 <h2>Specialization</h2>
-                <div>
+                <div class="home-list-wrap">
                     <ul>
                         <li>Lorem ipsum dolor sit amet</li>
                         <li>Lorem ipsum dolor sit amet</li>
@@ -24,9 +24,9 @@
                     </ul>
                 </div>
             </div>
-            <div>
+            <div class="home-list-cont">
                 <h2>Employee leasing benefits</h2>
-                <div>
+                <div class="home-list-wrap">
                     <ul>
                         <li>Lorem ipsum dolor sit amet</li>
                         <li>Lorem ipsum dolor sit amet</li>
@@ -77,8 +77,18 @@
             </div>
         </section>
         <section>
-            <h2>Looking for a employment? Browse our job offers</h2>
-            <div>{!! view('partials.link',['href'=>route('jobs.index'),'text'=>'Browse Jobs']) !!}</div>
+            <div class="home-button">
+                <h2>Looking for a employment? Browse our job offers</h2>
+                <div class="home-button-link">
+                    {!! view('partials.link',['href'=>route('jobs.index'),'text'=>'Browse Jobs']) !!}
+                </div>
+            </div>
+            <div class="home-button">
+                <h2>Send us your application</h2>
+                <div class="home-button-link">
+                    {!! view('partials.link',['href'=>route('application.create'),'text'=>'Send Application']) !!}
+                </div>
+            </div>
         </section>
     </div>
 @endsection

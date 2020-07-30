@@ -21,16 +21,16 @@
             <button type="submit">Search</button>
             <button type="reset">Reset</button>
         </form>
-        <div class="row">
-            <div class="col-md-4" v-for="job in output" :key="output.id">
-                <a :href="'/jobs/'+job.id">
-                    <div>
-                        <img :src="job.img">
-                    </div>
-                    <div>
-                        <h3>{{ job.title }}</h3>
-                        <h4>{{ job.field }}</h4>
-                        <h4>{{ job.location }}</h4>
+        <div class="job-card-wrap">
+            <div class="job-card" v-for="job in output" :key="output.id">
+                <a :href="'/jobs/'+job.id "  >
+                    <div class="job-card-inner">
+                        <div class="job-card-img" :style="{ backgroundImage: `url(${job.img})` }"></div>
+                        <div class="job-card-text">
+                            <h3>{{ job.title }}</h3>
+                            <h4>{{ job.field }}</h4>
+                            <h4>{{ job.location }}</h4>
+                        </div>
                     </div>
                 </a>
             </div>

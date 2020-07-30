@@ -1,1 +1,27 @@
 @use 'variables';
+
+.home-button{
+    margin: 40px 0;
+    text-align: center;
+    .home-button-link{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        a{
+            display: block;
+            margin: 30px;
+            padding: 5px;
+            background: seagreen;
+            width: 15%;
+            text-decoration: none;
+            color: white;
+            font-size: 1.2em;
+            transition: 0.4s ease-in-out;
+            &:hover{
+                padding: 10px;
+                width: 20%;
+                transition: 0.4s ease-in-out;
+            }
+        }
+    }
+}

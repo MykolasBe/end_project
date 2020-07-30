@@ -38172,18 +38172,23 @@ var render = function() {
     _vm._v(" "),
     _c(
       "div",
-      { staticClass: "row" },
+      { staticClass: "job-card-wrap" },
       _vm._l(_vm.output, function(job) {
-        return _c("div", { key: _vm.output.id, staticClass: "col-md-4" }, [
+        return _c("div", { key: _vm.output.id, staticClass: "job-card" }, [
           _c("a", { attrs: { href: "/jobs/" + job.id } }, [
-            _c("div", [_c("img", { attrs: { src: job.img } })]),
-            _vm._v(" "),
-            _c("div", [
-              _c("h3", [_vm._v(_vm._s(job.title))]),
+            _c("div", { staticClass: "job-card-inner" }, [
+              _c("div", {
+                staticClass: "job-card-img",
+                style: { backgroundImage: "url(" + job.img + ")" }
+              }),
               _vm._v(" "),
-              _c("h4", [_vm._v(_vm._s(job.field))]),
-              _vm._v(" "),
-              _c("h4", [_vm._v(_vm._s(job.location))])
+              _c("div", { staticClass: "job-card-text" }, [
+                _c("h3", [_vm._v(_vm._s(job.title))]),
+                _vm._v(" "),
+                _c("h4", [_vm._v(_vm._s(job.field))]),
+                _vm._v(" "),
+                _c("h4", [_vm._v(_vm._s(job.location))])
+              ])
             ])
           ])
         ])
@@ -38365,7 +38370,7 @@ var render = function() {
                     _c(
                       "a",
                       { attrs: { href: "/application/" + application.id } },
-                      [_vm._v("View Applications")]
+                      [_vm._v("View Application")]
                     )
                   ])
                 ])

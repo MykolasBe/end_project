@@ -42,7 +42,7 @@
                             <td>{{application.languages}}</td>
                             <td>{{application.work_experience === 0 ? 'no experience' : 'has experience'}}</td>
                             <td>{{application.work_type}}</td>
-                            <td><a :href="'/application/'+application.id">View Applications</a></td>
+                            <td><a :href="'/application/'+application.id">View Application</a></td>
                         </tr>
                     </tbody>
                 </table>

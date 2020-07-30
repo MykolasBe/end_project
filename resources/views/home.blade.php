@@ -44,11 +44,15 @@
         <section>
             <div class="home-button">
                 <h2>Looking for a employment? Browse our job offers</h2>
-                <div>{!! view('partials.link',['href'=>route('jobs.index'),'text'=>'Browse Jobs']) !!}</div>
+                <div class="home-button-link">
+                    {!! view('partials.link',['href'=>route('jobs.index'),'text'=>'Browse Jobs']) !!}
+                </div>
             </div>
-            <div>
+            <div class="home-button">
                 <h2>Send us your application</h2>
-                <div>{!! view('partials.link',['href'=>route('application.create'),'text'=>'Send Application']) !!}</div>
+                <div class="home-button-link">
+                    {!! view('partials.link',['href'=>route('application.create'),'text'=>'Send Application']) !!}
+                </div>
             </div>
         </section>
     </div>

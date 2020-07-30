@@ -1,0 +1,10 @@
+.job-show-wrap{
+    display: grid;
+    grid: 1fr / 3fr 1fr;
+    grid-gap: 50px;
+    .job-show-text {
+        .job-show-text-list{
+            padding: 20px;
+        }
+    }
+}
