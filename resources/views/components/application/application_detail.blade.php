@@ -35,4 +35,5 @@
             @break
     @endswitch
     <p>Looking for {{ $application->work_type === 'temp' ? 'temporary job' : $application->work_type .'-time'}} job</p>
+    {!! view('partials.form.delete_button', ['route' => route('application.destroy', $application->id)]); !!}
 </div>

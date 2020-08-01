@@ -31,7 +31,7 @@
             <div class="footer-wrap container" >
                 <p>{!! view('partials.link',['href'=>route('home'),'text'=>'Home']) !!}</p>
                 <p>{!! view('partials.link',['href'=>route('jobs.index'),'text'=>'Jobs']) !!}</p>
-                <p>All rights reserved ©Mykolas Bėčius 2020</p>
+                <p>All rights reserved Mykolas Bėčius  ©2020</p>
                 <p>{!! view('partials.link',['href'=>route('application.create'),'text'=>'Send Application']) !!}</p>
                 <p>{!! view('partials.link',['href'=>route('login'),'text'=>'Login']) !!}</p>
             </div>

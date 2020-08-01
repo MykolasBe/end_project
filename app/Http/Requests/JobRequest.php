@@ -38,6 +38,11 @@ class JobRequest extends FormRequest
     }
 
 
+    /**
+     * sanitizes inputs
+     * explodes description
+     * @return array
+     */
     public function sanitizedInputs():array
     {
         $sanitized = (new Sanitizer($this->validated(),[
@@ -49,7 +54,6 @@ class JobRequest extends FormRequest
             'location' => 'trim|escape',
             'field' => 'trim|escape'
         ]))->sanitize();
-            // img file doenst need sanitze
         return [
             'title' => $sanitized['title'],
             'client_description' => $sanitized['client_description'],

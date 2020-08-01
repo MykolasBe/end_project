@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Storage;
 
 class JobPositionController extends Controller
 {
+    /**
+     * JobPositionController constructor
+     * Calls Auth middleware for all methods except index, show and searchJob
+     */
     public function __construct()
     {
         $this->middleware('auth',['except' => ['index','show','searchJob']]);
@@ -18,9 +22,7 @@ class JobPositionController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Display all jobs with search capability
      */
     public function index()
     {
@@ -28,9 +30,7 @@ class JobPositionController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Show the form for creating a new job
      */
     public function create()
     {
@@ -84,10 +84,10 @@ class JobPositionController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created job in MariaDB
+     * Store img to storage and save as url in MariaDB
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param JobRequest $request filters and sanitizes form inputs
      */
     public function store(JobRequest $request)
     {
@@ -100,17 +100,14 @@ class JobPositionController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\JobPosition  $jobPosition
-     * @return \Illuminate\Http\Response
+     * Display the specified job.
      */
     public function show($id)
     {
         $job = JobPosition::find($id);
         if (Auth::check()){
             $buttons = view('partials.link',['href'=> route('jobs.edit', $job->id), 'text' => 'Edit']) .
-                view('partials.form.delete_button',['job_id' => $job->id]);
+                view('partials.form.delete_button', ['route' => route('jobs.destroy', $job->id)]);
         } else {
             $buttons = view('partials.form.job_application', ['job' => $job]);
         }
@@ -119,10 +116,7 @@ class JobPositionController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\JobPosition  $jobPosition
-     * @return \Illuminate\Http\Response
+     * Show the form for editing the specified job.
      */
     public function edit($id)
     {
@@ -194,11 +188,9 @@ class JobPositionController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified job in MariaDB.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\JobPosition  $jobPosition
-     * @return \Illuminate\Http\Response
+     * @param JobRequest $request filters and sanitizes form inputs
      */
     public function update(JobRequest $request, $id)
     {
@@ -209,10 +201,7 @@ class JobPositionController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\JobPosition  $jobPosition
-     * @return \Illuminate\Http\Response
+     * Remove the specified job from MariaDB.
      */
     public function destroy($id)
     {
@@ -222,11 +211,19 @@ class JobPositionController extends Controller
         return redirect(route('jobs.index'));
     }
 
+    /**
+     * Displays job list with related applications
+     */
     public function applied()
     {
         return view('jobs.jobs_applied');
     }
 
+    /**
+     * Search method
+     * If request null returns all jobs
+     * If request !null returns required jobs
+     */
     public function searchJob(Request $request)
     {
         if ($request->search === null){
@@ -237,6 +234,13 @@ class JobPositionController extends Controller
         }
     }
 
+    /**
+     * Search method
+     * If request null returns all applications
+     * If request !null returns required applications
+     *
+     * Spins each job to get application relation
+     */
     public function searchApplied(Request $request)
     {
         if ($request->search === null){

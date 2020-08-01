@@ -20,7 +20,7 @@ class ApplicationRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
-     *J
+     *
      * @return array
      */
     public function rules()
@@ -42,6 +42,10 @@ class ApplicationRequest extends FormRequest
         ];
     }
 
+    /**
+     * sanitizes inputs
+     * @return array
+     */
     public function sanitizedInputs():array
     {
         return (new Sanitizer($this->validated(),[

@@ -12,10 +12,11 @@ class ApplicationSuccess extends Mailable
     use Queueable, SerializesModels;
 
     public $application;
+
     /**
      * Create a new message instance.
      *
-     * @return void
+     * @param Application $application
      */
     public function __construct(Application $application)
     {

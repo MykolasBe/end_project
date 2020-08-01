@@ -1,4 +1,4 @@
-<form action="{{ route('jobs.destroy', $job_id) }}" method="POST">
+<form action="{{ $route }}" method="POST">
     @method('DELETE')
     @csrf
     <button>Delete</button>

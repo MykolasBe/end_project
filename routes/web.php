@@ -15,16 +15,19 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes(['register' => false]);
 
+    //Home routes
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/recruit', 'HomeController@recruit')->name('recruit');
 Route::get('/lease', 'HomeController@lease')->name('lease');
 Route::get('/consult', 'HomeController@consult')->name('consult');
 
+    // Job routes
 Route::get('jobs/applied', 'JobPositionController@applied')->name('jobs.applied');
 Route::post('jobs/searchJob', 'JobPositionController@searchJob');
 Route::post('jobs/searchApplied', 'JobPositionController@searchApplied');
 Route::resource('/jobs','JobPositionController');
 
+    //application routes
 Route::get('application/apply/{id}', 'ApplicationController@apply')->name('application.apply');
 Route::post('application/search', 'ApplicationController@searchApplication');
 Route::resource('/application','ApplicationController');

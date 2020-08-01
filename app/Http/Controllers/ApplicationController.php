@@ -12,15 +12,18 @@ use Illuminate\Support\Facades\Mail;
 
 class ApplicationController extends Controller
 {
+    /**
+     * ApplicationController constructor
+     * Calls Auth middleware for all methods except create, store and apply
+     */
     public function __construct()
     {
         $this->middleware('auth',['except' => ['create','store','apply']]);
         parent::__construct();
     }
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Display all applications with search capability
      */
     public function index()
     {
@@ -28,9 +31,7 @@ class ApplicationController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Show the form for creating a new application.
      */
     public function create($job_id = null)
     {
@@ -121,10 +122,11 @@ class ApplicationController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created application in MariaDB
+     * Creates relation if $request has job_id
+     * Sends email to applicant upon successful $request
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param ApplicationRequest $request filters and sanitizes form inputs
      */
     public function store(ApplicationRequest $request)
     {
@@ -140,7 +142,7 @@ class ApplicationController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified application.
      *
      * @param int $id
      */
@@ -166,45 +168,25 @@ class ApplicationController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Remove the specified application from MariaDB.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        $application = Application::find($id);
+        $application->delete();
+
+        return redirect(route('application.index'));
     }
 
     /**
-     * Add/Create the specified resource to storage & pivot.
+     * Creates/Syncs relations between applications and jobs
+     * OR
+     * Redirects to create method with job id
      *
      * @param JobApplicationRequest $request
      * @param int $id
-     * @return void
      */
     public function apply(JobApplicationRequest $request, $id)
     {
@@ -224,6 +206,11 @@ class ApplicationController extends Controller
         }
     }
 
+    /**
+     * Search method
+     * If request null returns all applications
+     * If request !null returns required applications
+     */
     public function searchApplication(Request $request)
     {
         if ($request->search === null){
